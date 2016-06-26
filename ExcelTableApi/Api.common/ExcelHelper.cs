@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 //using System.Windows.Forms;
+
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;//2007
@@ -24,6 +25,10 @@ namespace ExcelTableApi.Api.common
 
         public ExcelHelper()
         { }
+
+       
+
+
         public static void CreateExcel()
         {
             throw new Exception("不支持这个函数了哦。");
@@ -401,7 +406,7 @@ namespace ExcelTableApi.Api.common
             {
                 throw new ArgumentNullException("ExcelDataSet为空。");
             }
-            if (string.IsNullOrWhiteSpace(fileName))
+            if (String.IsNullOrWhiteSpace(fileName))
             {
                 throw new ArgumentNullException("fileName为空。");
             }
@@ -459,40 +464,11 @@ namespace ExcelTableApi.Api.common
             }
         }
 
-        public string GetExcelContent()
-        {
-            if (_excelDataSet == null)
-            {
-                throw new ArgumentNullException("ExcelDataSet为空。");
-            }
-            StringBuilder sbExcel = new StringBuilder();
-            sbExcel.Append(GetExcelHeader());
-            if (_excelDataSet.Tables.Count <= 0)
-            {
-                sbExcel.Append(GetWorksheetHeader(-1));
-                sbExcel.Append(GetRowData(new List<string>() { "" }));
-                sbExcel.Append(GetWorksheetFooter());
-            }
-            else
-            {
-                for (int i = 0; i < _excelDataSet.Tables.Count; i++)
-                {
-                    sbExcel.Append(GetWorksheetHeader(i));
-                    sbExcel.Append(GetWorksheetColumnsSet(i));
-                    foreach (DataRow row in _excelDataSet.Tables[i].Rows)
-                    {
-                        sbExcel.Append(GetRowData(row));
-                    }
-                    sbExcel.Append(GetWorksheetFooter());
-                }
-            }
-            sbExcel.Append(GetExcelFooter());
-            return sbExcel.ToString();
-        }
+       
 
         private string GetExcelHeader()
         {
-            return string.Format(@"
+            return String.Format(@"
 <?xml version={0}1.0{0} encoding={0}utf-8{0}?>
 <?mso-application progid={0}Excel.Sheet{0}?>
 <Workbook xmlns:ss={0}urn:schemas-microsoft-com:office:spreadsheet{0} xmlns={0}urn:schemas-microsoft-com:office:spreadsheet{0}>
@@ -518,7 +494,7 @@ namespace ExcelTableApi.Api.common
                 columnCount = _excelDataSet.Tables[dataTableIndex].Columns.Count;
                 rowCount = _excelDataSet.Tables[dataTableIndex].Rows.Count + 1;
             }
-            return string.Format(@"<ss:Worksheet ss:Name={0}{1}{0}>
+            return String.Format(@"<ss:Worksheet ss:Name={0}{1}{0}>
 <Table>
 ", "\"", dataTableIndex >= 0 ? _excelDataSet.Tables[dataTableIndex].TableName : "Sheet1");
         }
@@ -547,7 +523,7 @@ namespace ExcelTableApi.Api.common
             {
                 sbRow.Append(GetCellString(item));
             });
-            return string.Format("<Row ss:AutoFitHeight=\"0\">{0}</Row>", sbRow.ToString());
+            return String.Format("<Row ss:AutoFitHeight=\"0\">{0}</Row>", sbRow.ToString());
         }
 
         private string GetRowData(DataRow rowData)
@@ -557,19 +533,19 @@ namespace ExcelTableApi.Api.common
             {
                 sbRow.Append(GetCellString(item));
             }
-            return string.Format("<Row ss:AutoFitHeight=\"0\">{0}</Row>", sbRow.ToString());
+            return String.Format("<Row ss:AutoFitHeight=\"0\">{0}</Row>", sbRow.ToString());
         }
 
         private string GetCellString(object cellContent)
         {
-            return string.Format("<Cell>{0}</Cell>", GetCellData(cellContent));
+            return String.Format("<Cell>{0}</Cell>", GetCellData(cellContent));
         }
 
         private string GetCellData(object content)
         {
             if (content == null)
                 return "<Data ss:Type=\"String\"></Data>";
-            return string.Format("<Data ss:Type=\"String\">{0}</Data>",
+            return String.Format("<Data ss:Type=\"String\">{0}</Data>",
                 content.ToString().Replace("&", "&amp;")
                 .Replace("<", "&lt;")
                 .Replace(">", "&gt;")
@@ -582,7 +558,7 @@ namespace ExcelTableApi.Api.common
 
         private string GetWorksheetFooter()
         {
-            return string.Format(@"
+            return String.Format(@"
 </Table>
 </ss:Worksheet>
 ", "\"");

@@ -80,7 +80,11 @@ namespace ExcelTableApi.Api.impl
            filecount = 0;
           for (int i = 0; i < tableList.Count; i++)
           {
-              ExcelHelper.ExportToExcel(tableList[i], @"..\\Debug\\拆表结果\\" + tableList[i].Rows[0]["收/派件员"].ToString());
+             /*ExcelHelper.ExportToExcel(tableList[i], @"..\\Debug\\拆表结果\\" + tableList[i].Rows[0]["收/派件员"].ToString());*/
+              //修改后的导出excel
+              DataToExcel.TableToExcelForXLS(tableList[i], @"..\\Debug\\拆表结果\\" + tableList[i].Rows[0]["收/派件员"].ToString()+".xls");
+         
+
               filecount++;
           }
           if (filecount == tableList.Count)
