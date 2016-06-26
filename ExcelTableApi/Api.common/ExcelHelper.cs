@@ -9,7 +9,7 @@ using System.Text;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;//2007
-namespace TestPlatformManager
+namespace ExcelTableApi.Api.common
 {
     public class ExcelHelper
     {
