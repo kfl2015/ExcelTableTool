@@ -54,6 +54,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api.common\DataToExccel.cs" />
     <Compile Include="Api.common\ExcelHelper.cs" />
     <Compile Include="Api.impl\RemoveTableBLL.cs" />
     <Compile Include="Api.service\IRemoveTableBLL.cs" />
